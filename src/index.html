@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
   <head>
     <meta charset="utf-8">
@@ -15,8 +15,21 @@
     </main>
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script>
-      var apiData = ["London", "Paris"];
-      var temperature = 22;
+      
+
+
+$( document ).ready(function() {
+    
+
+var temperature
+
+$.getJSON( 'http://api.openweathermap.org/data/2.5/weather?q=Berlin', function(data){
+    temperature = Math.floor(data.main.temp-272.15);
+    $('.temperature').text(temperature);
+  });
+
+
+ var apiData = ["London", "Paris"];
       var weatherIcon = 'snow';
       $.each(apiData, function(index, city) {
         $('.cities').append(
@@ -25,6 +38,16 @@
       });
       $('.temperature').text(temperature);
       $('img').attr('src', 'images/' + weatherIcon + '.svg')
+
+
+});
+  
+
+
+    
+
+    
+
     </script>
   </body>
 </html>
