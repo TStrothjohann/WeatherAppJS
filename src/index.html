@@ -20,34 +20,43 @@
 
 $( document ).ready(function() {
     
+  var weatherIcon = 'snow';
+  var temperature;
+  
 
-var temperature
+  $.ajax({
+    url: "http://weather-api.herokuapp.com/cities",
+    dataType: 'jsonp',
+  }).done(function(data) {
+    apiData = data.cities;
+    console.log(apiData);
 
-$.getJSON( 'http://api.openweathermap.org/data/2.5/weather?q=Berlin', function(data){
-    temperature = Math.floor(data.main.temp-272.15);
+  $.each(apiData, function(index, city) {
+    $('.cities').append(
+      $('<option></option>').val(city).html(city + " ⌄")
+    );
+  });
     $('.temperature').text(temperature);
+    $('img').attr('src', 'images/' + weatherIcon + '.svg')
   });
 
 
- var apiData = ["London", "Paris"];
-      var weatherIcon = 'snow';
-      $.each(apiData, function(index, city) {
-        $('.cities').append(
-          $('<option></option>').val(city).html(city + " ⌄")
-        );
-      });
+
+$('.cities').change(function(){
+  var city = $("option:selected").val()
+  var WeatherURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city;
+  
+  $.getJSON( WeatherURL, function(data){
+      temperature = Math.floor(data.main.temp-272.15);
       $('.temperature').text(temperature);
-      $('img').attr('src', 'images/' + weatherIcon + '.svg')
+    });
+});
 
 
 });
-  
 
 
-    
-
-    
-
+ 
     </script>
   </body>
 </html>
